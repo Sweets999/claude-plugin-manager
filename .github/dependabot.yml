@@ -1,0 +1,44 @@
+version: 2
+
+updates:
+  # GitHub Actions in CI/release workflows — keeps the SHA pins fresh.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+    # Wait until a release is >3 days old before opening a PR (supply-chain
+    # cooldown). Applies to version updates only — security updates are immediate.
+    cooldown:
+      default-days: 3
+      include:
+        - "*"
+
+  # npm dependencies (one runtime dep: jsonc-parser, plus any dev deps).
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: chore
+      prefix-development: chore
+      include: scope
+    groups:
+      npm-minor-patch:
+        update-types:
+          - minor
+          - patch
+    cooldown:
+      default-days: 3
+      include:
+        - "*"
