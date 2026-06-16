@@ -1,13 +1,17 @@
-# cpm — claude-plugin-manager
+<div align="center">
+  <img width="600" alt="Screenshot 2026-06-16 at 20 01 54" src="https://github.com/user-attachments/assets/a22db77e-7b87-42ec-a742-6d0dc96e0241" />
+  
+  <h1 align="center">CPM</h1>
+
+  [![npm version](https://img.shields.io/npm/v/@sweets999/claude-plugin-manager.svg)](https://www.npmjs.com/package/@sweets999/claude-plugin-manager)
+  [![CI](https://github.com/Sweets999/claude-plugin-manager/actions/workflows/ci.yml/badge.svg)](https://github.com/Sweets999/claude-plugin-manager/actions/workflows/ci.yml)
+  [![node](https://img.shields.io/node/v/@sweets999/claude-plugin-manager.svg)](https://nodejs.org)
+  [![license: MIT](https://img.shields.io/npm/l/@sweets999/claude-plugin-manager.svg)](LICENSE)
+  [![maintainer: Sweets999](https://img.shields.io/badge/maintainer-Sweets999-blue.svg)](https://github.com/Sweets999)
+</div>
 
 Switch between named **profiles** of Claude Code plugins and MCP servers in one
 keystroke, to keep your context lean.
-
-[![npm version](https://img.shields.io/npm/v/@sweets999/claude-plugin-manager.svg)](https://www.npmjs.com/package/@sweets999/claude-plugin-manager)
-[![CI](https://github.com/Sweets999/claude-plugin-manager/actions/workflows/ci.yml/badge.svg)](https://github.com/Sweets999/claude-plugin-manager/actions/workflows/ci.yml)
-[![node](https://img.shields.io/node/v/@sweets999/claude-plugin-manager.svg)](https://nodejs.org)
-[![license: MIT](https://img.shields.io/npm/l/@sweets999/claude-plugin-manager.svg)](LICENSE)
-[![maintainer: Sweets999](https://img.shields.io/badge/maintainer-Sweets999-blue.svg)](https://github.com/Sweets999)
 
 Every enabled plugin loads its MCP servers, skills, commands and hooks into the
 session — and each user-defined MCP server you enable too — all of which cost
