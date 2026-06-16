@@ -10,24 +10,34 @@
   [![maintainer: Sweets999](https://img.shields.io/badge/maintainer-Sweets999-blue.svg)](https://github.com/Sweets999)
 </div>
 
-Switch between named **profiles** of Claude Code plugins and MCP servers in one
-keystroke, to keep your context lean.
+<div align="center">
 
-Every enabled plugin loads its MCP servers, skills, commands and hooks into the
-session — and each user-defined MCP server you enable too — all of which cost
-context tokens. As you accumulate them, the baseline cost grows even when most are
-irrelevant to the task. Claude Code has no built-in concept of plugin or MCP
-presets; the only knobs are the `enabledPlugins` map in `~/.claude/settings.json`
-and the `mcpServers` map in `~/.claude.json`, toggled one at a time.
+### **`cpm <name>` launches Claude Code with a profile — a bundle of just the plugins and MCP servers you want.**
 
-`cpm` lets you declare profiles bundling both plugins and MCP servers once, and
-switch instantly:
+**Switch your whole toolset in one command. Keep your context lean.**
+
+</div>
+
+**The problem:** every plugin and MCP server you enable loads its skills,
+commands, hooks and tool definitions into *every* session — spending context
+tokens before you've typed a word. The more you install, the heavier that
+baseline gets, even when most of it has nothing to do with the task in front of
+you. And Claude Code has no notion of presets: the only controls are the
+`enabledPlugins` map in `~/.claude/settings.json` and the `mcpServers` map in
+`~/.claude.json`, flipped one entry at a time.
+
+**The fix:** `cpm` lets you declare profiles — named bundles of plugins and MCP
+servers — once, then load the right one with a single command:
 
 ```console
-$ cpm focus          # launch a lean session with just this profile loaded
-$ cpm use focus      # or make it your persistent global default
+$ cpm focus          # start a lean claude session with just the "focus" profile
+$ cpm web            # …or the "web" profile — any profile name works
+$ cpm use focus      # make a profile your persistent global default
 $ cpm undo           # revert the last persistent swap
 ```
+
+`cpm <name>` is the day-to-day workhorse: it launches a fresh, isolated `claude`
+session with only that profile loaded, and never touches your global config.
 
 <div align="center">
   <img alt="cpm demo: status → ls → diff → focus" src="docs/demo.gif" width="760" />
@@ -51,28 +61,43 @@ $ cpm undo           # revert the last persistent swap
 
 ## Quick start
 
-Install it, then let Claude set it up for you:
+**1. Install it.**
 
 ```bash
 npm install -g @sweets999/claude-plugin-manager
 ```
 
-A global install also drops a small **Claude skill** into `~/.claude/skills/` (see
-[How Claude configures it](#how-claude-configures-it)). So now you can just tell
-Claude:
+**2. Let Claude set up your profiles.** A global install drops a small **Claude
+skill** into `~/.claude/skills/` (see [How Claude configures
+it](#how-claude-configures-it)), so you can just ask. Start a session and give it
+the prompt:
 
-> **set up cpm**
+```bash
+claude --model sonnet      # any session works; sonnet is plenty for this
+```
 
-and it will inspect your installed plugins, propose a few sensible profiles
-(including a minimal `focus` profile for deep work), confirm with you, and write
+```text
+set up cpm      # from within your claude session - this invokes the cpm skill to help with setup
+```
+
+Claude inspects your installed plugins, proposes a few sensible profiles
+(including a minimal `focus` profile for deep work), confirms with you, and writes
 the config — no manual steps.
 
-After that, **`cpm focus`** is all you need day-to-day: a bare profile name
-launches an isolated `claude` session with just that profile loaded (shorthand for
-`cpm run focus`, and the most succinct way to use `cpm`).
+**3. Use a profile.** From then on, `cpm <name>` is all you need day-to-day:
+
+```bash
+cpm focus      # start a lean session with only the "focus" profile loaded
+cpm web        # …or any other profile you defined
+```
+
+A bare profile name launches a fresh, isolated `claude` session with just that
+profile (shorthand for `cpm run <name>`) — the quickest, most common way to use
+`cpm`. To make a profile your persistent global default instead, use
+[`cpm use <name>`](#two-ways-to-apply-a-profile).
 
 <details>
-<summary>No skill? Paste this prompt into Claude instead</summary>
+<summary>No skill installed? Paste this prompt into Claude instead</summary>
 
 ```text
 Install claude-plugin-manager globally with `npm install -g @sweets999/claude-plugin-manager`,
