@@ -1,0 +1,43 @@
+{
+  "name": "@sweets999/claude-plugin-manager",
+  "version": "0.2.0",
+  "description": "cpm — switch between named sets (profiles) of Claude Code plugins and MCP servers to control context bloat",
+  "type": "module",
+  "bin": {
+    "cpm": "bin/cpm.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "start": "node bin/cpm.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "plugins",
+    "mcp",
+    "cli",
+    "context"
+  ],
+  "license": "MIT",
+  "author": "Tom Sweeting",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sweets999/claude-plugin-manager.git"
+  },
+  "homepage": "https://github.com/Sweets999/claude-plugin-manager#readme",
+  "bugs": "https://github.com/Sweets999/claude-plugin-manager/issues",
+  "dependencies": {
+    "jsonc-parser": "^3.3.1"
+  }
+}

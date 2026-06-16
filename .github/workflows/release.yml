@@ -1,0 +1,44 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write        # push release commit + tag + GitHub Release
+  issues: write          # semantic-release/github comments
+  pull-requests: write
+  id-token: write        # OIDC trusted publishing + provenance
+
+jobs:
+  release:
+    name: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0            # full history + tags for commit-analyzer
+          persist-credentials: true # lets @semantic-release/git push back
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22          # >= 22.14.0 for OIDC trusted publishing
+          registry-url: https://registry.npmjs.org
+      - name: Upgrade npm for OIDC trusted publishing
+        run: npm install -g npm@latest   # need >= 11.5.1
+      - run: npm ci
+      - name: Test (release gate)
+        run: npm test
+      - name: Release
+        run: >-
+          npx --yes
+          -p semantic-release
+          -p @semantic-release/changelog
+          -p @semantic-release/git
+          semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_CONFIG_PROVENANCE: "true"
