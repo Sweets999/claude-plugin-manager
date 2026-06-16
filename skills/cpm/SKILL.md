@@ -20,8 +20,22 @@ description: >-
 
 ## Driving cpm day-to-day
 
-- `cpm focus` (or any bare profile name) — launch an isolated `claude` session with just that profile loaded. Shorthand for `cpm run focus`.
-- `cpm use <profile>` — persist a profile as the global default. Reversible with `cpm undo`; takes effect next session or via `/reload-plugins`.
-- `cpm ls` / `cpm status` / `cpm diff <profile>` — list profiles, show the current set, and preview what a swap would change.
+**`cpm <name>` is the main way to use cpm.** A bare profile name (e.g. `cpm focus`, `cpm web`) launches a fresh, isolated `claude` session with only that profile loaded, and never touches the user's global config. It's shorthand for `cpm run <name>`. Recommend this first; reach for `cpm use` only when the user explicitly wants a *persistent* global default.
 
-See `cpm help` for everything else.
+Common commands:
+
+- `cpm <name>` — start an isolated session with just that profile (the default, recommended path). No restart needed; the new session is already configured.
+- `cpm use <name>` — persist a profile as the global default. Reversible with `cpm undo`. Because plugins load at session start, it takes effect in the *next* session or after `/reload-plugins`.
+- `cpm undo` — revert the last `cpm use` (plugins and MCP servers together).
+- `cpm ls` — list the defined profiles.
+- `cpm status` — show the currently enabled set, the matching profile (if any), and warnings.
+- `cpm diff <name>` — preview exactly what `cpm use <name>` would change, before running it.
+- `cpm plugins` / `cpm mcp` — list installed plugins and MCP servers with their enabled state.
+
+## Guardrails
+
+- **Don't activate profiles on the user's behalf during setup.** After writing config, tell the user which command to run (`cpm <name>`) rather than running it yourself — `cpm use`/`cpm run`/`cpm <name>` change the live config or session.
+- **Prefer `cpm <name>` over `cpm use`** unless the user asks for a persistent default — it's reversible by simply closing the session and leaves global config untouched.
+- **`cpm help` is the source of truth.** If anything here seems out of date or you need a flag, exit code, or the config schema, read `cpm help` rather than guessing.
+
+See `cpm help` for the full command list, flags, and config reference.
