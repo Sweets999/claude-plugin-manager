@@ -29,7 +29,9 @@ $ cpm use focus      # or make it your persistent global default
 $ cpm undo           # revert the last persistent swap
 ```
 
-<!-- VHS: drop a recorded demo here, e.g. ![cpm demo](docs/demo.gif) -->
+<div align="center">
+  <img alt="cpm demo: status → ls → diff → focus" src="docs/demo.gif" width="760" />
+</div>
 
 ## Contents
 
@@ -157,6 +159,10 @@ this — it launches a fresh session already configured.
 `run` even wins inside a repo that pins its own `enabledPlugins` (a `--settings`
 file outranks project settings); `use` does not — `cpm status` warns you when
 you're in such a directory.
+
+<div align="center">
+  <img alt="cpm demo: use a profile globally, then undo" src="docs/demo-use-undo.gif" width="760" />
+</div>
 
 > Because that `--settings` file outranks your global settings, Claude Code's
 > plugin view may flag any profile plugin you've globally disabled as *"Disabled in
