@@ -167,6 +167,7 @@ function describe(t) {
     if (t.removeDir) bits.push('empty dir');
     return `${t.path}  (${bits.join(' + ')})`;
   }
+  if (t.kind === 'skill') return `${t.path}  (bundled Claude skill)`;
   return t.protected ? `${t.path}  (your profiles config)` : t.path;
 }
 

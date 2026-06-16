@@ -92,6 +92,14 @@ export const COMMANDS = [
     flags: ['--force'],
   },
   {
+    name: 'skill',
+    aliases: [],
+    group: 'manage',
+    usage: 'skill <install|uninstall|path>',
+    summary: 'Install/remove the bundled Claude skill',
+    flags: [],
+  },
+  {
     name: 'uninstall',
     aliases: [],
     group: 'manage',

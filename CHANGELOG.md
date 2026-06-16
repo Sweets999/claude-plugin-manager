@@ -4,6 +4,26 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Bundled Claude skill.** A global install now writes a small skill to
+  `~/.claude/skills/cpm/SKILL.md` (via an npm `postinstall` hook) so you can just
+  tell Claude "set up cpm" and it knows how to configure and drive the tool. The
+  skill is intentionally thin and defers to `cpm help` as the source of truth.
+- **`cpm skill <install|uninstall|path>`** to manage that skill manually — useful
+  after a sandboxed/CI install where postinstall is skipped. `cpm uninstall` now
+  removes the skill too.
+- **`CPM_NO_POSTINSTALL`** env var to skip the automatic skill install.
+
+### Changed
+
+- **README** restructured: badges, a table of contents, a skill-first quick start,
+  example profiles, and an FAQ/troubleshooting section.
+- **CI** also runs on pushes to `main` (not just pull requests) so the build-status
+  badge reflects the default branch.
+
 ## [0.2.0] - 2026-06-16
 
 First public-release cleanup. Pre-1.0, so the config-shape change below is a

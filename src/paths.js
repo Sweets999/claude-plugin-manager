@@ -19,6 +19,10 @@ export function resolvePaths({ env = process.env, configOverride, home } = {}) {
     claudeJson: env.CPM_CLAUDE_JSON || path.join(homeDir, '.claude.json'),
     // Side-store of MCP definitions so cpm can re-enable servers it turned off.
     mcpStore: path.join(claudeDir, 'cpm.mcp-store.json'),
+    // Bundled Claude Code skill (auto-installed on global install). Lives under
+    // ~/.claude/skills/ so Claude discovers it as a personal skill.
+    skillDir: path.join(claudeDir, 'skills', 'cpm'),
+    skillFile: path.join(claudeDir, 'skills', 'cpm', 'SKILL.md'),
     config,
     backupsDir: path.join(claudeDir, 'backups'),
     lastPointer: path.join(claudeDir, 'cpm.last.json'),
@@ -38,6 +42,8 @@ export function resolvePaths({ env = process.env, configOverride, home } = {}) {
 //   kind 'file'    -> a single file cpm writes; unlinked on removal.
 //   kind 'backups' -> the backups dir; only cpm's own `settings.json.cpm.*.bak`
 //                     snapshots are removed, and the dir only if left empty.
+//   kind 'skill'   -> the bundled skill file; its `skills/cpm/` dir is removed too
+//                     if cpm left it empty.
 //   protected      -> user-authored data (the profiles config). Requires an extra
 //                     confirmation and is kept unless --purge.
 //
@@ -49,6 +55,7 @@ export function cpmArtifacts(paths) {
     { key: 'lastPointer', path: paths.lastPointer, kind: 'file' },
     { key: 'lock', path: paths.lock, kind: 'file' },
     { key: 'mcpStore', path: paths.mcpStore, kind: 'file' },
+    { key: 'skill', path: paths.skillFile, kind: 'skill' },
     { key: 'backups', path: paths.backupsDir, kind: 'backups' },
   ];
 }
