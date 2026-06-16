@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Fake `claude` binary used ONLY for recording cpm demos.
+#
+# cpm shells out to `claude` for two things:
+#   * `claude plugin list --json`  -> the installed-plugin universe
+#   * `claude mcp list`            -> plugin-bundled MCP discovery (cosmetic)
+# and `cpm run`/`cpm <profile>` launch `claude` for a session.
+#
+# Pointing CPM_CLAUDE_BIN at this stub keeps the demo hermetic: it never touches
+# the real Claude install and never exposes the user's actual (company) plugins.
+set -euo pipefail
+
+if [[ "${1:-}" == "plugin" && "${2:-}" == "list" ]]; then
+  cat "${CPM_DEMO_PLUGINS_JSON:?}"
+  exit 0
+fi
+
+if [[ "${1:-}" == "mcp" && "${2:-}" == "list" ]]; then
+  cat "${CPM_DEMO_MCP_LIST:?}"
+  exit 0
+fi
+
+# Anything else is `cpm run` launching a session (args: --settings <tmp> ...).
+# Print a believable Claude Code splash, then exit so the recording moves on.
+cat <<'BANNER'
+
+ ✻ Welcome to Claude Code
+
+   Loaded profile via cpm — lean context, only what you need.
+
+BANNER
+exit 0
