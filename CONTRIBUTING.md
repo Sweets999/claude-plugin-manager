@@ -60,8 +60,10 @@ full module map.
 Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/)
 (`fix:`, `feat:`, `chore:`, `docs:`, …) because releases are automated: on merge to
 `main`, [semantic-release](https://semantic-release.gitbook.io/) reads the commit
-prefixes to pick the next version, publish to npm, update `CHANGELOG.md`, and cut a
-GitHub Release. `fix:` → patch, `feat:` → minor. Avoid `feat!:` / `BREAKING CHANGE:`
+prefixes to pick the next version, publish to npm, push the version tag, and cut a
+GitHub Release (whose notes are the per-release changelog). It does **not** commit
+back to `main`, so `CHANGELOG.md` is maintained by hand in your PR (see the checklist
+below). `fix:` → patch, `feat:` → minor. Avoid `feat!:` / `BREAKING CHANGE:`
 until we intend to ship `1.0.0` — they force a major bump.
 
 ## Before opening a PR
