@@ -9,11 +9,14 @@
   "files": [
     "bin/",
     "src/",
+    "scripts/",
+    "skills/",
     "README.md"
   ],
   "scripts": {
     "test": "node --test",
-    "start": "node bin/cpm.js"
+    "start": "node bin/cpm.js",
+    "postinstall": "node scripts/postinstall.js"
   },
   "engines": {
     "node": ">=18"

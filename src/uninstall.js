@@ -76,6 +76,18 @@ export function removeCpmFiles(paths, { includeProtected = false } = {}) {
           /* not empty / race — leave it */
         }
       }
+    } else if (a.kind === 'skill') {
+      unlink(a.path) ? removed.push(a.path) : missing.push(a.path);
+      // drop skills/cpm/ if cpm emptied it (leave it if the user added files)
+      const dir = path.dirname(a.path);
+      if (fs.existsSync(dir) && readdirSafe(dir).length === 0) {
+        try {
+          fs.rmdirSync(dir);
+          removed.push(dir);
+        } catch {
+          /* not empty / race — leave it */
+        }
+      }
     } else {
       unlink(a.path) ? removed.push(a.path) : missing.push(a.path);
     }

@@ -19,6 +19,8 @@ function setup() {
   fs.writeFileSync(paths.lock, String(process.pid));
   fs.writeFileSync(paths.mcpStore, '{ "version": 1, "servers": {} }');
   fs.writeFileSync(paths.settings, '{ "enabledPlugins": {} }');
+  fs.mkdirSync(paths.skillDir, { recursive: true });
+  fs.writeFileSync(paths.skillFile, '# cpm skill');
 
   // cpm-owned backup + an unrelated file a user dropped in backups/
   const ownBak = path.join(
@@ -39,8 +41,8 @@ test('planUninstall lists unprotected targets and reports the pointer', () => {
   assert.equal(plan.pointerExists, true);
   const keys = plan.targets.map((t) => t.key).sort();
   // config is protected -> excluded when includeProtected is false.
-  // mcpStore is a cpm-owned artifact and is listed.
-  assert.deepEqual(keys, ['backups', 'lastPointer', 'lock', 'mcpStore']);
+  // mcpStore and skill are cpm-owned artifacts and are listed.
+  assert.deepEqual(keys, ['backups', 'lastPointer', 'lock', 'mcpStore', 'skill']);
   assert.ok(plan.targets.every((t) => t.exists));
 });
 
