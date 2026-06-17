@@ -292,7 +292,8 @@ your comments and ordering.
         "docker",                            // bare name → resolved to its marketplace
         "playwright@acme"                    // fully-qualified → used as-is
       ],
-      "mcp": ["github", "sentry"]           // user MCP servers, by name
+      "mcp": ["github", "sentry"],          // user MCP servers, by name
+      "extraArgs": ["--dangerously-skip-permissions"]  // extra flags for cpm run
     }
   }
 }
@@ -306,6 +307,9 @@ your comments and ordering.
 - **`base`** is a nested object: **`base.plugins`** applies plugins to every profile
   and **`base.mcp`** applies MCP servers. A profile with `"base": false` opts out of
   BOTH.
+- **`extraArgs`** is an optional array of strings. On every `cpm run <profile>` (or
+  bare `cpm <profile>`), these flags are prepended to the `claude` invocation before
+  anything after `--`. Not inherited through `extends`.
 - **`extends`** composes profiles. Resolution order is `base → parents → self`,
   deduped; cycles are detected.
 - A profile referencing an uninstalled plugin or unknown MCP server produces a warning

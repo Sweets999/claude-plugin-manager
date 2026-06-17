@@ -166,3 +166,36 @@ test('resolveMcpEntries: circular extends is detected', () => {
     return true;
   });
 });
+
+// --- extraArgs -----------------------------------------------------------
+
+test('extraArgs: valid array of strings is preserved', () => {
+  const cfg = readConfig(
+    '{ "profiles": { "foo": { "extraArgs": ["--dangerously-skip-permissions", "--verbose"] } } }',
+  );
+  assert.deepEqual(cfg.profiles.foo.extraArgs, ['--dangerously-skip-permissions', '--verbose']);
+});
+
+test('extraArgs: empty array is valid', () => {
+  const cfg = readConfig('{ "profiles": { "foo": { "extraArgs": [] } } }');
+  assert.deepEqual(cfg.profiles.foo.extraArgs, []);
+});
+
+test('extraArgs: absent field is absent (no default injected)', () => {
+  const cfg = readConfig('{ "profiles": { "foo": {} } }');
+  assert.equal(cfg.profiles.foo.extraArgs, undefined);
+});
+
+test('extraArgs: non-array throws ConfigError', () => {
+  assert.throws(
+    () => readConfig('{ "profiles": { "foo": { "extraArgs": "--flag" } } }'),
+    ConfigError,
+  );
+});
+
+test('extraArgs: array with non-string element throws ConfigError', () => {
+  assert.throws(
+    () => readConfig('{ "profiles": { "foo": { "extraArgs": [42] } } }'),
+    ConfigError,
+  );
+});
