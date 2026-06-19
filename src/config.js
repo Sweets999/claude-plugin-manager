@@ -59,6 +59,12 @@ export function normalizeConfig(data, source = 'config') {
     ) {
       throw new ConfigError(`${source}: profile "${name}".extends must be a string or array`);
     }
+    if (
+      p.extraArgs != null &&
+      (!Array.isArray(p.extraArgs) || !p.extraArgs.every((e) => typeof e === 'string'))
+    ) {
+      throw new ConfigError(`${source}: profile "${name}".extraArgs must be an array of strings`);
+    }
   }
 
   return {

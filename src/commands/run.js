@@ -20,7 +20,10 @@ export default async function run(ctx) {
     ),
   );
 
+  const profileExtraArgs = config.profiles[name]?.extraArgs ?? [];
+  const allPassthrough = [...profileExtraArgs, ...ctx.passthrough];
+
   // Non-mutating: defs for selected-but-disabled servers come from mcpPlan.desired
   // (resolved against the merged store ∪ live), so nothing on disk is touched.
-  return runWithProfile(ctx, pluginPlan.desired, ctx.passthrough, { mcpServers: mcpPlan.desired });
+  return runWithProfile(ctx, pluginPlan.desired, allPassthrough, { mcpServers: mcpPlan.desired });
 }

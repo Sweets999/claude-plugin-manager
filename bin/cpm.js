@@ -134,7 +134,8 @@ PROFILES CONFIG  (~/.claude/cpm.profiles.jsonc — override with --config or $CP
             "docker",                             // bare name -> auto-resolved
             "playwright@acme"                     // or full name@marketplace
           ],
-          "mcp": ["github", "sentry"]            // user MCP servers, referenced by name
+          "mcp": ["github", "sentry"],           // user MCP servers, referenced by name
+          "extraArgs": ["--dangerously-skip-permissions"]  // extra flags for cpm run
         }
       }
     }
@@ -144,6 +145,9 @@ PROFILES CONFIG  (~/.claude/cpm.profiles.jsonc — override with --config or $CP
   - "base.plugins" applies plugins to every profile; "base.mcp" applies MCP servers.
     A profile opts out of BOTH with "base": false.
   - "mcp" lists user MCP servers BY NAME (see MCP MANAGEMENT below).
+  - "extraArgs" is an optional array of strings; on every cpm run (or bare cpm
+    <profile>), these flags are prepended before anything after --. Not inherited
+    through extends.
   - "extends" composes profiles; resolution order is base -> parents -> self, deduped.
 
 APPLYING A PROFILE
@@ -152,9 +156,10 @@ APPLYING A PROFILE
                             undo with cpm undo. Takes effect on the next claude
                             session or via /reload-plugins.
   cpm run <profile> [-- ...]  One-off. Launches claude with ONLY that profile for a
-                            single session; global config untouched. Anything after
-                            -- is passed through to claude. "cpm <profile>" (no verb)
-                            is shorthand for run. Launches claude through your shell
+                            single session; global config untouched. Any "extraArgs"
+                            in the profile config are prepended first; anything after
+                            -- is appended. "cpm <profile>" (no verb) is shorthand
+                            for run. Launches claude through your shell
                             so a claude alias/function (and any env it injects) is
                             honored; set CPM_CLAUDE_BIN to force a direct binary call.
 

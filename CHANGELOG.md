@@ -8,6 +8,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- **`extraArgs`** in the profile config: an optional array of strings passed
+  automatically to `claude` on every `cpm run <profile>` (or bare `cpm <profile>`).
+  Profile args are prepended; CLI `-- <args>` are appended after, so they can
+  always override. Example: `"extraArgs": ["--dangerously-skip-permissions"]`.
 - **Bundled Claude skill.** A global install now writes a small skill to
   `~/.claude/skills/cpm/SKILL.md` (via an npm `postinstall` hook) so you can just
   tell Claude "set up cpm" and it knows how to configure and drive the tool. The
